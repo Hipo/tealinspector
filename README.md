@@ -1,6 +1,6 @@
 # tealinspector
 
-As a developer you got an error like below,
+As a developer error like below is not descriptive,
 
 ```python
 AlgodHTTPError: TransactionPool.Remember: transaction T4EVC7YANLFGBO5KJRIDEAYZBN3KKJC2B7VFRY4ZFMTSZOPTHBTQ: logic eval error: assert failed pc=1328. Details: pc=1328, opcodes===
