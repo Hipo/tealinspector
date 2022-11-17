@@ -24,7 +24,7 @@ def get_algod_client(*, network):
 def get_teal(*, algod_client, application_id):
     approval_program = algod_client.application_info(application_id)['params']['approval-program']
     bytecode = b64decode(approval_program)
-    teal = algod.algod_request("POST", '/teal/disassemble', data=bytecode)['result']
+    teal = algod_client.algod_request("POST", '/teal/disassemble', data=bytecode)['result']
     return teal
 
 
@@ -39,12 +39,12 @@ def print_teal(*, teal, line_number, line_count=25):
 
     teal_lines = teal.split('\n')
     for l in range(line_number - line_count, line_number + 1):
-        print(l, teal_lines[l], '<---------- ' if l == line else '')
+        print(l, teal_lines[l], '<---------- ' if l == line_number else '')
 
 
-def inspect(*, network, application_id, program_counter):
+def inspect(*, network, application_id, program_counter, line_count):
     algod_client = get_algod_client(network=network)
     teal = get_teal(algod_client=algod_client, application_id=application_id)
     sourcemap = get_sourcemap(algod_client=algod_client, teal=teal)
     line_number = sourcemap.get_line_for_pc(program_counter)
-    print_teal(teal=teal, line_number=line_number)
+    print_teal(teal=teal, line_number=line_number, line_count=line_count)
